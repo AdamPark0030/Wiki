@@ -1,7 +1,7 @@
 
-*EasyCanvas와 EasyCanvas Pro 프로젝트는 앱에서 결제방식을 제외하고는 같은 기능을 사용하므로,
+*EasyCanvas와 EasyCanvas Pro 프로젝트는 앱에서 결제방식을 제외하고는 같은 기능을 사용하므로,*
 
-한 프로젝트에서 관리하는 것이 더 편하다고 생각되어 flavorDimensions 기능을 적용하는 과정을 정리합니다.*
+*한 프로젝트에서 관리하는 것이 더 편하다고 생각되어 flavorDimensions 기능을 적용하는 과정을 정리합니다.*
 
 # flavorDimensions 적용
 
