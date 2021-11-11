@@ -52,7 +52,7 @@ productFlavors {
 
 appCenter Key 값, LicenseCheck을 위한 키값 등 EasyCanvas와 EasyCanvasPro 에서 각각 다르게 적용되어야 할 코드들이 있습니다.   
 
-위에서 설정한 buildConfigField를 통해 EasyCanvas에서만 실행할 지, EasyCanvas Pro 에서만 실행할 지 여부를 선택할 수 있습니다.   
+이때 위에서 설정한 buildConfigField를 통해 EasyCanvas에서만 실행할 지, EasyCanvas Pro 에서만 실행할 지 여부를 선택할 수 있습니다.   
 
 만약 EasyCanvas에서 앱을 빌드했을 경우 BuildConfig.INAPP의 값이 true로 설정되어 이지캔버스에서만 동작하게끔 설정할 수 있습니다.   
 
@@ -62,9 +62,9 @@ appCenter Key 값, LicenseCheck을 위한 키값 등 EasyCanvas와 EasyCanvasPro
 
 flavor에 따라 package명이 달라지면서 참조할 클래스를 찾지못하는 오류들이 많이 발생했습니다.   
 
-분리되어야 할 클래스를 제외하고도 의존성때문에 다른 클래스들도 분리하게 되면서 사용하는데 적절하지 않다고 판단했습니다.   
+분리되어야 할 클래스를 제외하고도 의존성때문에 다른 클래스들도 분리하게 되면서 클래스를 분리하여 사용하는 방법은 적절하지 않다고 판단했습니다.   
 
-그러므로, 위에서 설명한 BuildConfig의 변수값에 따라 한 클래스에서 분기되도록 구성했습니다.   
+그러므로, 위에서 설명한 BuildConfig의 변수값에 따라 클래스 내부에서 분기되도록 구성했습니다.
 
 ## 리소스 파일 분리하기
     이지캔버스와 이지캔버스 프로에서 앱 아이콘, 구매팝업창의 경우 각각 다른 이미지와 화면을 표시해야 합니다.
@@ -81,6 +81,7 @@ flavor에 따라 package명이 달라지면서 참조할 클래스를 찾지못�
       └─res
 
 ## 주의사항
+
 종종 Build Variant에서 Active Build Variant를 설정하고 실행 시켰을 때 이전에 선택했었던 Build Variant로 실행되는 경우가 있는데,
 
 이때는 Clean Project -> Rebuild Project 후 다시실행 하시면 정상적으로 실행됩니다.
@@ -101,14 +102,14 @@ aab 파일의 경우 batch 빌드 스크립트에서 이름을 변경하도록 �
 1. java (저는 OpenJDK 1.8.0_291 버전 사용했습니다.) 
 2. bundletool (1.8.2 버전 사용했습니다.) [Download bundletool](https://github.com/google/bundletool)
 
-+ apks 추출 (현재 연결된 디바이스에 apk 설치)
++ 현재 연결된 디바이스에 apk 설치
   
 1. java -jar "bundletool_path.jar" build-apks --bundle="bundle_path.aab" --output="output_apk_path.apks" 
 
 2. java -jar "bundletool_path_.jar" install-apks --apks=./app-debug.apks
 
 
-+ apk 추출 (apk 파일 추출)
++ apk 파일 추출
 
 1. java -jar "bundletool-all-1.8.2.jar" build-apks 
    --bundle="bypd-Debug-0.0.1.aab" 
@@ -137,3 +138,14 @@ Google Play에서 대신 앱 서명 키를 생성하여 앱에 서명하는 데 
 
 첫 번째 버전에 서명할 때 사용한 키가 업로드 키가 되며 차후 버전에 서명할 때도 이 키를 사용해야 합니다.
 
+## 주의사항
+
+aab에서 추출한 apk 파일은 디바이스에 설치 시에 아래와 같은 팝업메세지가 발생합니다.
+
+"Play 프로텍트에 의해 차단됨"
+
+Play 프로텍트에서 앱 개발자를 인식할 수 없습니다. 알 수 없는 개발자의 앱은 안전하지 않을 수 있습니다.
+
+이는 추출한 apk 파일의 서명이 되지 않아서 발생하는 문제로 보이며,
+
+무시하고 설치하면 정상적으로 설치 가능합니다.
